@@ -21,6 +21,17 @@ export class AuthService {
     throw new UnauthorizedException('Provider não suportado');
   }
 
+  public async userInfo(token: string) {
+    try {
+      const response = await this.googleSsoService.verify(token);
+      if (!response.email) throw new UnauthorizedException('Erro ao recuperar usuário.');
+
+      return response;
+    } catch (error) {
+      throw new UnauthorizedException('Erro ao recuperar usuário.');
+    }
+  }
+
   protected async generateJwt(name: string, email: string, picture: string) {
     const payload = {
       name,
