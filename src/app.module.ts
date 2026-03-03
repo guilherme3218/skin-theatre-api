@@ -3,11 +3,15 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisModule } from './modules/redis/redis.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
+    RedisModule,
+    DatabaseModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -25,7 +29,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
         autoLoadEntities: true,
 
-        synchronize: true,
+        synchronize: config.get<string>('DB_SYNCHRONIZE') === 'true',
       }),
     }),
   ],

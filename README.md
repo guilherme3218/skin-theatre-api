@@ -99,4 +99,14 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ## Init for bd
 
-- psql postgres -f src/database/init-skin-theatre.sql
+- Bootstrap manual (db/user): `src/database/schema/001_init_db.sql`
+- npm run start:dev
+
+### Schema automation (without migration framework)
+
+- Versioned SQL scripts: `src/database/schema/*.sql`
+- Applied automatically on startup
+- Control table: `schema_version`
+- To add schema changes, create a new file with numeric prefix, e.g.:
+  - `002_add_user_phone.sql`
+  - `003_create_orders.sql`
